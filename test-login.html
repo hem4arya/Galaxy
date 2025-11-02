@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login</title>
+</head>
+<body>
+    <h1>Login Test</h1>
+    <p>Password: <strong>Hem123arya@</strong></p>
+    <p>This is a hardcoded password that doesn't connect to Supabase.</p>
+    
+    <script>
+        // Test the hardcoded password
+        const HARDCODED_PASSWORD = 'Hem123arya@';
+        
+        function testLogin(inputPassword) {
+            return inputPassword === HARDCODED_PASSWORD;
+        }
+        
+        console.log('Testing password "Hem123arya@":', testLogin('Hem123arya@')); // Should be true
+        console.log('Testing wrong password "wrong":', testLogin('wrong')); // Should be false
+    </script>
+</body>
+</html>

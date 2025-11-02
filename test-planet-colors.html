@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planet Color Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #0a0a1e; color: white; }
+        .planet-demo { display: inline-block; margin: 10px; text-align: center; }
+        .planet-circle { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 10px; }
+        .planet-info { font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>🌌 Planet Color & Size Generation Test</h1>
+    <p>Each project gets a unique color and size based on its characteristics:</p>
+    
+    <div id="planets"></div>
+    
+    <script>
+        // Simulate the planet generation logic
+        const PLANET_COLORS = [
+            '#8b5cf6', '#ec4899', '#06b6d4', '#10b981', '#f59e0b', '#ef4444',
+            '#3b82f6', '#84cc16', '#f97316', '#6366f1', '#14b8a6', '#a855f7',
+            '#22c55e', '#eab308', '#e11d48', '#0ea5e9'
+        ];
+
+        function generatePlanetColor(projectId) {
+            let hash = 0;
+            for (let i = 0; i < projectId.length; i++) {
+                const char = projectId.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            const colorIndex = Math.abs(hash) % PLANET_COLORS.length;
+            return PLANET_COLORS[colorIndex];
+        }
+
+        function generatePlanetImportance(project) {
+            const titleLength = project.title?.length || 0;
+            const skillsCount = project.skills_used?.length || 0;
+            const hasGithubLink = project.github_link ? 1 : 0;
+            
+            let score = 0;
+            if (titleLength > 20) score += 2;
+            else if (titleLength > 10) score += 1;
+            
+            if (skillsCount > 5) score += 2;
+            else if (skillsCount > 2) score += 1;
+            
+            score += hasGithubLink;
+            const idHash = project.id ? project.id.charCodeAt(0) % 3 : 0;
+            score += idHash;
+            
+            return Math.max(2, Math.min(6, score + 2));
+        }
+
+        // Test projects
+        const testProjects = [
+            { id: 'proj1', title: 'E-Commerce Platform', skills_used: ['React', 'Node.js', 'MongoDB'], github_link: 'https://github.com' },
+            { id: 'proj2', title: 'AI Bot', skills_used: ['Python', 'TensorFlow'], github_link: '' },
+            { id: 'proj3', title: 'Weather Dashboard with Advanced Analytics', skills_used: ['Vue', 'D3.js', 'API', 'Charts', 'WebSocket', 'Redis'], github_link: 'https://github.com' },
+            { id: 'proj4', title: 'Chat App', skills_used: ['Socket.io'], github_link: 'https://github.com' },
+            { id: 'proj5', title: 'Portfolio Website', skills_used: ['Svelte', 'CSS', 'JavaScript'], github_link: 'https://github.com' }
+        ];
+
+        const planetsContainer = document.getElementById('planets');
+        
+        testProjects.forEach(project => {
+            const color = generatePlanetColor(project.id);
+            const importance = generatePlanetImportance(project);
+            const size = 30 + importance * 8; // Scale for demo
+            
+            const planetDiv = document.createElement('div');
+            planetDiv.className = 'planet-demo';
+            planetDiv.innerHTML = `
+                <div class="planet-circle" style="background: ${color}; width: ${size}px; height: ${size}px;"></div>
+                <div class="planet-info">
+                    <strong>${project.title}</strong><br>
+                    Color: ${color}<br>
+                    Size: ${importance}/6<br>
+                    Skills: ${project.skills_used.length}
+                </div>
+            `;
+            planetsContainer.appendChild(planetDiv);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+table_name,columns
+messages,"[{""column"":""sender_name"",""type"":""text""},{""column"":""sender_email"",""type"":""text""},{""column"":""created_at"",""type"":""timestamp with time zone""},{""column"":""body"",""type"":""text""},{""column"":""message_type"",""type"":""text""},{""column"":""id"",""type"":""uuid""}]"
+profile,"[{""column"":""hire_text"",""type"":""text""},{""column"":""id"",""type"":""integer""},{""column"":""about_text"",""type"":""text""},{""column"":""collab_text"",""type"":""text""}]"
+projects,"[{""column"":""title"",""type"":""text""},{""column"":""description"",""type"":""text""},{""column"":""github_link"",""type"":""text""},{""column"":""skills_used"",""type"":""ARRAY""},{""column"":""Position"",""type"":""ARRAY""},{""column"":""created_at"",""type"":""timestamp with time zone""},{""column"":""id"",""type"":""uuid""}]"
+skills,"[{""column"":""type"",""type"":""text""},{""column"":""name"",""type"":""text""},{""column"":""id"",""type"":""integer""}]"
