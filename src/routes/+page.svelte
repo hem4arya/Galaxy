@@ -170,10 +170,10 @@
   function getOrbitalRadius(index: number, importance: number): number {
     if (!isMobile) return 0;
     
-    // Base radius increases with each planet
-    const baseRadius = 100 + (index * 25);
+    // Smaller base radius for smaller planets
+    const baseRadius = 80 + (index * 22);
     // Adjust slightly based on importance
-    const importanceOffset = (importance - 3) * 5;
+    const importanceOffset = (importance - 3) * 4;
     return baseRadius + importanceOffset;
   }
 
@@ -288,6 +288,17 @@
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    position: fixed;
+    background: transparent;
+  }
+
+  :global(html) {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: transparent;
   }
 
   :global(*) {
@@ -295,14 +306,16 @@
   }
 
   .content {
-    position: relative;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
   }
 
   /* Hero Section - Cinematic */
@@ -495,25 +508,26 @@
     position: fixed;
     bottom: 30px;
     right: 30px;
-    padding: 15px 30px;
-    background: rgba(147, 112, 219, 0.2);
+    padding: 16px 32px;
+    background: rgba(147, 112, 219, 0.3);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(147, 112, 219, 0.5);
+    border: 2px solid rgba(147, 112, 219, 0.6);
     border-radius: 25px;
     color: white;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 1500;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.5px;
   }
 
   .about-btn:hover {
-    background: rgba(147, 112, 219, 0.4);
+    background: rgba(147, 112, 219, 0.5);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(147, 112, 219, 0.4);
+    box-shadow: 0 10px 30px rgba(147, 112, 219, 0.5);
   }
 
   .about-btn:active {
@@ -524,26 +538,27 @@
   .hire-btn {
     position: fixed;
     bottom: 30px;
-    right: 180px;
-    padding: 15px 30px;
-    background: rgba(16, 185, 129, 0.2);
+    right: 200px;
+    padding: 16px 32px;
+    background: rgba(16, 185, 129, 0.3);
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(16, 185, 129, 0.5);
+    border: 2px solid rgba(16, 185, 129, 0.6);
     border-radius: 25px;
     color: white;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 1500;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.5px;
   }
 
   .hire-btn:hover {
-    background: rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.5);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
   }
 
   .hire-btn:active {
@@ -737,14 +752,15 @@
 
     /* Buttons stay at bottom */
     .about-btn {
-      bottom: 80px;
+      bottom: 85px;
       left: 50%;
       right: auto;
       transform: translateX(-50%);
-      padding: 14px 28px;
-      font-size: 15px;
-      min-height: 48px;
-      min-width: 140px;
+      padding: 16px 32px;
+      font-size: 17px;
+      font-weight: 700;
+      min-height: 52px;
+      min-width: 160px;
       z-index: 2000;
     }
 
@@ -753,10 +769,11 @@
       left: 50%;
       right: auto;
       transform: translateX(-50%);
-      padding: 14px 28px;
-      font-size: 15px;
-      min-height: 48px;
-      min-width: 140px;
+      padding: 16px 32px;
+      font-size: 17px;
+      font-weight: 700;
+      min-height: 52px;
+      min-width: 160px;
       z-index: 2000;
     }
 
@@ -800,14 +817,15 @@
 
     .about-btn,
     .hire-btn {
-      padding: 12px 24px;
-      font-size: 14px;
-      min-height: 44px;
-      min-width: 130px;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      min-height: 48px;
+      min-width: 150px;
     }
 
     .about-btn {
-      bottom: 70px;
+      bottom: 75px;
     }
 
     .hire-btn {

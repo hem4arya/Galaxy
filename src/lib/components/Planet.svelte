@@ -10,7 +10,12 @@
   let { project, onclick }: Props = $props();
   let isHovered = $state(false);
 
-  const size = 80 + (project.importance || 3) * 35; // 115-255px based on importance
+  // Detect mobile for smaller planets
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const baseSize = isMobile ? 50 : 80;
+  const sizeMultiplier = isMobile ? 20 : 35;
+  
+  const size = baseSize + (project.importance || 3) * sizeMultiplier; // Mobile: 70-150px, Desktop: 115-255px
   const orbitDuration = 50 + Math.random() * 30; // 50-80s
   const hasRing = project.importance >= 4;
   

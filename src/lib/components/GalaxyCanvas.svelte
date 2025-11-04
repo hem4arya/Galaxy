@@ -180,14 +180,15 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
     background: 
       radial-gradient(ellipse at 30% 20%, rgba(88, 28, 135, 0.15) 0%, transparent 50%),
       radial-gradient(ellipse at 70% 80%, rgba(219, 39, 119, 0.12) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
       linear-gradient(180deg, #050510 0%, #0a0a1e 30%, #0f0f2e 60%, #1a1a3e 100%);
+    z-index: 0;
   }
 
   .atmosphere-glow {
