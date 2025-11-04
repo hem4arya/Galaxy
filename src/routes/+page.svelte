@@ -214,7 +214,8 @@
     <div class="planets-container" class:mobile-solar-system={isMobile}>
       {#if loading}
         <div class="loading">Loading...</div>
-      {:else}
+      {:else if isMobile}
+        <!-- Mobile: Solar System with Orbits -->
         {#each projects as project, index (project.id)}
           <div 
             class="planet-orbit" 
@@ -225,6 +226,11 @@
           >
             <Planet {project} onclick={() => openProject(project)} />
           </div>
+        {/each}
+      {:else}
+        <!-- Desktop: Original Galaxy Layout -->
+        {#each projects as project (project.id)}
+          <Planet {project} onclick={() => openProject(project)} />
         {/each}
       {/if}
     </div>
@@ -751,35 +757,31 @@
       animation-direction: reverse;
     }
 
-    /* Buttons stay at bottom */
+    /* Mobile Buttons - Side by Side at Bottom */
     .about-btn {
-      bottom: 90px;
-      left: 50%;
+      bottom: 20px;
+      left: 20px;
       right: auto;
-      transform: translateX(-50%);
-      padding: 16px 32px;
-      font-size: 17px;
+      transform: none;
+      padding: 14px 20px;
+      font-size: 15px;
       font-weight: 700;
-      min-height: 52px;
-      min-width: 160px;
+      min-height: 50px;
+      width: calc(50% - 25px);
       z-index: 2000;
-      display: block;
-      visibility: visible;
     }
 
     .hire-btn {
-      bottom: 25px;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      padding: 16px 32px;
-      font-size: 17px;
+      bottom: 20px;
+      right: 20px;
+      left: auto;
+      transform: none;
+      padding: 14px 20px;
+      font-size: 15px;
       font-weight: 700;
-      min-height: 52px;
-      min-width: 160px;
+      min-height: 50px;
+      width: calc(50% - 25px);
       z-index: 2000;
-      display: block;
-      visibility: visible;
     }
 
     .about-box {
@@ -817,25 +819,26 @@
     }
 
     .planets-container {
-      height: calc(100vh - 120px);
-      top: 100px;
+      height: calc(100vh - 110px);
+      top: 90px;
     }
 
+    /* Smaller buttons on very small screens */
     .about-btn,
     .hire-btn {
-      padding: 14px 28px;
-      font-size: 16px;
+      padding: 12px 16px;
+      font-size: 14px;
       font-weight: 700;
       min-height: 48px;
-      min-width: 150px;
+      width: calc(50% - 18px);
     }
 
     .about-btn {
-      bottom: 75px;
+      left: 15px;
     }
 
     .hire-btn {
-      bottom: 15px;
+      right: 15px;
     }
 
     .about-box {
