@@ -302,10 +302,22 @@
     }
   }
 
-  /* Mobile Optimizations */
+  /* Mobile Solar System Layout */
   @media (max-width: 768px) {
+    .planet-wrapper {
+      /* Positioning handled by parent orbit wrapper */
+      position: relative;
+    }
+
     .planet-container {
-      will-change: auto;
+      position: relative;
+      will-change: transform;
+      z-index: calc(100 + var(--importance, 0));
+      animation: none;
+    }
+
+    .planet-container:hover {
+      animation-play-state: running;
     }
 
     .planet {
@@ -331,34 +343,40 @@
     }
 
     .hover-tooltip {
-      font-size: 14px;
-      padding: 14px 18px;
-      min-width: 220px;
-      max-width: 300px;
+      font-size: 13px;
+      padding: 10px 14px;
+      min-width: 160px;
+      max-width: 220px;
     }
 
     .hover-tooltip h4 {
-      font-size: 15px;
+      font-size: 14px;
+      margin-bottom: 4px;
     }
 
     .hover-tooltip p {
-      font-size: 13px;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .hover-tooltip small {
+      font-size: 9px;
     }
   }
 
   @media (max-width: 480px) {
     .hover-tooltip {
-      min-width: 180px;
-      max-width: 260px;
-      padding: 12px 16px;
+      min-width: 140px;
+      max-width: 200px;
+      padding: 8px 12px;
     }
 
     .hover-tooltip h4 {
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .hover-tooltip p {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 

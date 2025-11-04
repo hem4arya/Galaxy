@@ -1,0 +1,157 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                    MOBILE SOLAR SYSTEM LAYOUT                 ║
+║                         (≤768px width)                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────┐
+│                                                               │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │         Welcome to My Galaxy (Hero Text)               │ │
+│  │    Explore the cosmos — Click any planet to discover   │ │
+│  └─────────────────────────────────────────────────────────┘ │
+│                                                               │
+│                                                               │
+│                         🪐 Planet 1                           │
+│                    (Orbit radius: 100px)                      │
+│                                                               │
+│              🪐                           🪐                  │
+│          Planet 5                     Planet 2                │
+│        (Orbit: 200px)               (Orbit: 125px)            │
+│                                                               │
+│                                                               │
+│                           🌙                                  │
+│                          MOON                                 │
+│                      (Admin Button)                           │
+│                    *** CENTERED ***                           │
+│                                                               │
+│                                                               │
+│              🪐                           🪐                  │
+│          Planet 4                     Planet 3                │
+│        (Orbit: 175px)               (Orbit: 150px)            │
+│                                                               │
+│                                                               │
+│                                                               │
+│                                                               │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │                    [About Me Button]                    │ │
+│  │                                                         │ │
+│  │                    [Hire Me Button]                     │ │
+│  └─────────────────────────────────────────────────────────┘ │
+│                                                               │
+└───────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+KEY FEATURES:
+
+🌙 MOON (Admin Button)
+   • Position: Center of screen (50%, 50%)
+   • Size: 80px × 80px
+   • Z-index: 500
+   • Function: Opens admin login
+   • Always visible
+
+🪐 PLANETS (Projects)
+   • Orbit around moon in circles
+   • Radius: 100px + (index × 25px)
+   • Speed: 40-55 seconds per orbit
+   • Direction: Alternating clockwise/counterclockwise
+   • Start angle: Evenly distributed (72° apart)
+   • Z-index: 100 + importance
+   • Function: Opens project modal
+
+📝 HERO TEXT
+   • Position: Top of screen
+   • Compact design
+   • Z-index: 100
+   • Doesn't interfere with orbits
+
+🎯 BUTTONS (About Me / Hire Me)
+   • Position: Bottom center
+   • Size: 44-48px height (touch-friendly)
+   • Z-index: 2000
+   • Always accessible
+   • Stacked vertically
+
+═══════════════════════════════════════════════════════════════
+
+ORBITAL MECHANICS:
+
+Planet 1: Orbit 100px, Speed 50s, Direction: Clockwise
+Planet 2: Orbit 125px, Speed 45s, Direction: Counter-clockwise
+Planet 3: Orbit 150px, Speed 55s, Direction: Clockwise
+Planet 4: Orbit 175px, Speed 42s, Direction: Counter-clockwise
+Planet 5: Orbit 200px, Speed 48s, Direction: Clockwise
+
+Start Angles (prevents clustering):
+Planet 1: 0°
+Planet 2: 72°
+Planet 3: 144°
+Planet 4: 216°
+Planet 5: 288°
+
+═══════════════════════════════════════════════════════════════
+
+Z-INDEX HIERARCHY (Bottom to Top):
+
+Layer 1: Background (stars, nebulae)          Z: 1-10
+Layer 2: Hero text                            Z: 100
+Layer 3: Planets                              Z: 100-105
+Layer 4: Moon (admin)                         Z: 500
+Layer 5: Buttons (About/Hire)                 Z: 2000
+Layer 6: Modals                               Z: 3000
+
+═══════════════════════════════════════════════════════════════
+
+NO OVERLAPPING GUARANTEE:
+
+✅ Orbital radii calculated to prevent planet collision
+✅ Z-index ensures proper layering
+✅ Buttons positioned outside orbital area (bottom)
+✅ Hero text at top, clear of orbits
+✅ Moon at center with proper z-index
+✅ Modals above everything when open
+
+═══════════════════════════════════════════════════════════════
+
+ANIMATION FLOW:
+
+1. Page loads
+2. Hero fades in from top
+3. Moon appears at center with glow
+4. Planets fade in at their start positions
+5. Orbital rotation begins (smooth, continuous)
+6. Planets counter-rotate to stay upright
+7. User can tap any element at any time
+
+═══════════════════════════════════════════════════════════════
+
+PERFORMANCE OPTIMIZATIONS:
+
+• Reduced particles: 235 → 112 elements
+• Disabled parallax on mobile
+• Hardware acceleration enabled
+• Smooth 30-60 FPS animations
+• Touch-optimized interactions
+• Battery-friendly
+
+═══════════════════════════════════════════════════════════════
+
+RESPONSIVE BREAKPOINTS:
+
+Mobile (≤480px):
+  • Smaller orbital radii
+  • Compact tooltips
+  • Reduced planet sizes
+
+Tablet (481-768px):
+  • Medium orbital radii
+  • Full solar system
+  • Touch-optimized
+
+Desktop (>768px):
+  • Traditional scattered layout
+  • Full parallax effects
+  • Mouse interactions
+
+═══════════════════════════════════════════════════════════════

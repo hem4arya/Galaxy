@@ -284,21 +284,63 @@
     }
   }
 
+  /* Mobile Solar System - Moon at Center */
   @media (max-width: 768px) {
     .moon-button {
-      width: 60px;
-      height: 60px;
-      top: 20px;
-      right: 20px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      z-index: 500;
+      box-shadow: 0 0 40px rgba(240, 240, 240, 0.6), 0 0 80px rgba(240, 240, 240, 0.3);
+    }
+
+    .moon-button:hover {
+      transform: translate(-50%, -50%) scale(1.05);
     }
 
     .moon {
-      width: 38px;
-      height: 38px;
+      width: 50px;
+      height: 50px;
+    }
+
+    .crater-1 {
+      width: 12px;
+      height: 12px;
+      top: 14px;
+      left: 18px;
+    }
+
+    .crater-2 {
+      width: 9px;
+      height: 9px;
+      top: 28px;
+      left: 10px;
+    }
+
+    .crater-3 {
+      width: 7px;
+      height: 7px;
+      top: 20px;
+      right: 12px;
     }
 
     .login-box {
       padding: 30px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .moon-button {
+      width: 70px;
+      height: 70px;
+    }
+
+    .moon {
+      width: 45px;
+      height: 45px;
     }
   }
 </style>

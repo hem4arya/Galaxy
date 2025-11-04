@@ -154,6 +154,33 @@
   });
 
   let selectedProject = $state<Project | null>(null);
+  let isMobile = $state(false);
+
+  onMount(() => {
+    // Detect mobile
+    const checkMobile = () => {
+      isMobile = window.innerWidth <= 768;
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  });
+
+  // Calculate orbital radius for mobile based on project index and importance
+  function getOrbitalRadius(index: number, importance: number): number {
+    if (!isMobile) return 0;
+    
+    // Base radius increases with each planet
+    const baseRadius = 100 + (index * 25);
+    // Adjust slightly based on importance
+    const importanceOffset = (importance - 3) * 5;
+    return baseRadius + importanceOffset;
+  }
+
+  // Calculate staggered start angle to prevent overlap
+  function getStartAngle(index: number): number {
+    return (index * 72) % 360; // Distribute evenly
+  }
 
   function openProject(project: Project) {
     selectedProject = project;
@@ -184,12 +211,20 @@
     </header>
 
     <!-- Planets Container -->
-    <div class="planets-container">
+    <div class="planets-container" class:mobile-solar-system={isMobile}>
       {#if loading}
         <div class="loading">Loading...</div>
       {:else}
-        {#each projects as project (project.id)}
-          <Planet {project} onclick={() => openProject(project)} />
+        {#each projects as project, index (project.id)}
+          <div 
+            class="planet-orbit" 
+            style="
+              --orbit-radius: {getOrbitalRadius(index, project.importance)}px;
+              --start-angle: {getStartAngle(index)}deg;
+            "
+          >
+            <Planet {project} onclick={() => openProject(project)} />
+          </div>
         {/each}
       {/if}
     </div>
@@ -344,6 +379,13 @@
     pointer-events: auto;
   }
 
+  /* Planet Orbit Wrapper */
+  .planet-orbit {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
   /* Animations - Cinematic */
   @keyframes fadeInDown {
     from {
@@ -371,6 +413,24 @@
     }
     50% {
       background-position: 100% 50%;
+    }
+  }
+
+  @keyframes orbitRotate {
+    from {
+      transform: translate(-50%, -50%) rotate(var(--start-angle, 0deg));
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(calc(var(--start-angle, 0deg) + 360deg));
+    }
+  }
+
+  @keyframes counterRotate {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(-360deg);
     }
   }
 
@@ -602,30 +662,102 @@
     }
   }
 
-  /* Mobile Optimizations */
+  /* Mobile Solar System Layout */
   @media (max-width: 768px) {
     .content {
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
+      justify-content: center;
     }
 
+    /* Compact hero on mobile for solar system view */
+    .hero {
+      position: absolute;
+      top: 20px;
+      padding: 20px 15px 10px;
+      z-index: 100;
+    }
+
+    .title {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      padding: 0 10px;
+    }
+
+    /* Solar System Container */
+    .planets-container {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 140px);
+      top: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Mobile Solar System - Orbital Paths */
+    .planets-container.mobile-solar-system {
+      position: relative;
+    }
+
+    .planet-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(var(--start-angle, 0deg));
+      animation: orbitRotate 40s linear infinite;
+      z-index: 100;
+    }
+
+    /* Stagger animation durations for visual variety */
+    .planet-orbit:nth-child(1) { animation-duration: 50s; }
+    .planet-orbit:nth-child(2) { animation-duration: 45s; animation-direction: reverse; }
+    .planet-orbit:nth-child(3) { animation-duration: 55s; }
+    .planet-orbit:nth-child(4) { animation-duration: 42s; animation-direction: reverse; }
+    .planet-orbit:nth-child(5) { animation-duration: 48s; }
+    .planet-orbit:nth-child(6) { animation-duration: 52s; animation-direction: reverse; }
+
+    .planet-orbit :global(.planet-wrapper) {
+      position: absolute !important;
+      left: var(--orbit-radius, 120px) !important;
+      top: 0 !important;
+      transform: rotate(calc(-1 * var(--start-angle, 0deg)));
+    }
+
+    .planet-orbit :global(.planet-container) {
+      animation: counterRotate 40s linear infinite;
+    }
+
+    .planet-orbit:nth-child(2n) :global(.planet-container) {
+      animation-direction: reverse;
+    }
+
+    /* Buttons stay at bottom */
     .about-btn {
       bottom: 80px;
-      right: 20px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
       padding: 14px 28px;
       font-size: 15px;
       min-height: 48px;
-      min-width: 120px;
+      min-width: 140px;
+      z-index: 2000;
     }
 
     .hire-btn {
       bottom: 20px;
-      right: 20px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
       padding: 14px 28px;
       font-size: 15px;
       min-height: 48px;
-      min-width: 120px;
+      min-width: 140px;
+      z-index: 2000;
     }
 
     .about-box {
@@ -648,18 +780,38 @@
   }
 
   @media (max-width: 480px) {
+    .hero {
+      top: 15px;
+      padding: 15px 10px 8px;
+    }
+
+    .title {
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+    }
+
+    .planets-container {
+      height: calc(100vh - 120px);
+      top: 100px;
+    }
+
     .about-btn,
     .hire-btn {
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 14px;
       min-height: 44px;
-      min-width: 100px;
-      bottom: 15px;
-      right: 15px;
+      min-width: 130px;
     }
 
     .about-btn {
       bottom: 70px;
+    }
+
+    .hire-btn {
+      bottom: 15px;
     }
 
     .about-box {
