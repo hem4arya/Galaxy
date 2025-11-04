@@ -693,13 +693,14 @@
     }
 
     .title {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+      font-size: 2rem;
+      margin-bottom: 10px;
     }
 
     .subtitle {
-      font-size: 0.85rem;
+      font-size: 1rem;
       padding: 0 10px;
+      line-height: 1.5;
     }
 
     /* Solar System Container */
@@ -752,7 +753,7 @@
 
     /* Buttons stay at bottom */
     .about-btn {
-      bottom: 85px;
+      bottom: 90px;
       left: 50%;
       right: auto;
       transform: translateX(-50%);
@@ -762,10 +763,12 @@
       min-height: 52px;
       min-width: 160px;
       z-index: 2000;
+      display: block;
+      visibility: visible;
     }
 
     .hire-btn {
-      bottom: 20px;
+      bottom: 25px;
       left: 50%;
       right: auto;
       transform: translateX(-50%);
@@ -775,6 +778,8 @@
       min-height: 52px;
       min-width: 160px;
       z-index: 2000;
+      display: block;
+      visibility: visible;
     }
 
     .about-box {
@@ -803,11 +808,12 @@
     }
 
     .title {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
     }
 
     .subtitle {
-      font-size: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
 
     .planets-container {

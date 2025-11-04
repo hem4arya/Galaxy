@@ -309,9 +309,9 @@
 
   /* Mobile Solar System Layout */
   @media (max-width: 768px) {
+    /* Keep absolute positioning but let parent orbit handle it */
     .planet-wrapper {
-      /* Positioning handled by parent orbit wrapper */
-      position: relative;
+      position: absolute;
     }
 
     .planet-container {
