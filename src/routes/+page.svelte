@@ -446,12 +446,18 @@
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 1500;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .about-btn:hover {
     background: rgba(147, 112, 219, 0.4);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(147, 112, 219, 0.4);
+  }
+
+  .about-btn:active {
+    transform: translateY(-1px);
   }
 
   /* Hire Me Button */
@@ -470,12 +476,18 @@
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 1500;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .hire-btn:hover {
     background: rgba(16, 185, 129, 0.4);
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+  }
+
+  .hire-btn:active {
+    transform: translateY(-1px);
   }
 
   /* About Modal */
@@ -590,23 +602,36 @@
     }
   }
 
+  /* Mobile Optimizations */
   @media (max-width: 768px) {
+    .content {
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .about-btn {
       bottom: 80px;
       right: 20px;
-      padding: 12px 24px;
-      font-size: 14px;
+      padding: 14px 28px;
+      font-size: 15px;
+      min-height: 48px;
+      min-width: 120px;
     }
 
     .hire-btn {
       bottom: 20px;
       right: 20px;
-      padding: 12px 24px;
-      font-size: 14px;
+      padding: 14px 28px;
+      font-size: 15px;
+      min-height: 48px;
+      min-width: 120px;
     }
 
     .about-box {
       padding: 30px 20px;
+      width: 95%;
+      max-height: 85vh;
     }
 
     .about-box h2 {
@@ -614,8 +639,32 @@
     }
 
     .hire-form-btn {
-      padding: 10px 24px;
+      padding: 12px 28px;
+      font-size: 15px;
+      min-height: 48px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-btn,
+    .hire-btn {
+      padding: 12px 20px;
       font-size: 14px;
+      min-height: 44px;
+      min-width: 100px;
+      bottom: 15px;
+      right: 15px;
+    }
+
+    .about-btn {
+      bottom: 70px;
+    }
+
+    .about-box {
+      padding: 25px 15px;
+      border-radius: 15px;
     }
   }
 

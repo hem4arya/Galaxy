@@ -447,6 +447,15 @@
   }
 
   @media (max-width: 768px) {
+    .modal-backdrop {
+      padding: 15px;
+    }
+
+    .modal {
+      max-height: 92vh;
+      border-radius: 20px;
+    }
+
     .content-body {
       padding: 30px 20px;
     }
@@ -457,17 +466,117 @@
 
     .image-container {
       height: 200px;
+      border-radius: 20px 20px 0 0;
     }
 
     .link-button {
       min-width: 120px;
-      padding: 12px 20px;
-      font-size: 14px;
+      padding: 14px 22px;
+      font-size: 15px;
+      min-height: 48px;
     }
 
     .corner-decoration {
       width: 30px;
       height: 30px;
+    }
+
+    .close-button {
+      width: 42px;
+      height: 42px;
+      top: 20px;
+      right: 20px;
+    }
+
+    .tags {
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 7px 16px;
+      font-size: 13px;
+    }
+
+    .description {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-backdrop {
+      padding: 10px;
+    }
+
+    .modal {
+      border-radius: 15px;
+    }
+
+    .content-body {
+      padding: 25px 15px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .header-section {
+      gap: 12px;
+    }
+
+    .planet-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .image-container {
+      height: 180px;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .link-button {
+      width: 100%;
+      min-width: auto;
+      padding: 12px 20px;
+      font-size: 14px;
+      min-height: 44px;
+    }
+
+    .links {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .close-button {
+      width: 38px;
+      height: 38px;
+      top: 15px;
+      right: 15px;
+    }
+
+    .corner-decoration {
+      width: 25px;
+      height: 25px;
+    }
+
+    .corner-decoration.top-left,
+    .corner-decoration.top-right {
+      top: 10px;
+    }
+
+    .corner-decoration.bottom-left,
+    .corner-decoration.bottom-right {
+      bottom: 10px;
+    }
+
+    .corner-decoration.top-left,
+    .corner-decoration.bottom-left {
+      left: 10px;
+    }
+
+    .corner-decoration.top-right,
+    .corner-decoration.bottom-right {
+      right: 10px;
     }
   }
 </style>

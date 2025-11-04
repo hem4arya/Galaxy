@@ -89,16 +89,23 @@ function createParallaxEngine() {
 
   function init() {
     if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('touchmove', handleTouchMove);
-      start();
+      // Disable parallax on mobile for better performance
+      const isMobile = window.innerWidth <= 768;
+      
+      if (!isMobile) {
+        window.addEventListener('mousemove', handleMouseMove);
+        start();
+      }
+      
+      // Keep touch for tablets but with passive listener
+      window.addEventListener('touchmove', handleTouchMove, { passive: true });
     }
   }
 
   function destroy() {
     if (typeof window !== 'undefined') {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchmove', handleTouchMove as any);
       stop();
     }
   }

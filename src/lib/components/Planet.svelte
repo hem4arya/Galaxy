@@ -302,6 +302,66 @@
     }
   }
 
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .planet-container {
+      will-change: auto;
+    }
+
+    .planet {
+      box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.15),
+        0 5px 20px rgba(0, 0, 0, 0.3),
+        inset -10px -10px 30px rgba(0, 0, 0, 0.5),
+        inset 10px 10px 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .planet-container:hover .planet,
+    .planet-container:active .planet {
+      transform: translateZ(0) scale(1.15);
+      box-shadow: 
+        0 0 40px currentColor,
+        0 15px 30px rgba(0, 0, 0, 0.4),
+        inset -10px -10px 30px rgba(0, 0, 0, 0.5),
+        inset 10px 10px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .planet-texture {
+      animation-duration: 90s;
+    }
+
+    .hover-tooltip {
+      font-size: 14px;
+      padding: 14px 18px;
+      min-width: 220px;
+      max-width: 300px;
+    }
+
+    .hover-tooltip h4 {
+      font-size: 15px;
+    }
+
+    .hover-tooltip p {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hover-tooltip {
+      min-width: 180px;
+      max-width: 260px;
+      padding: 12px 16px;
+    }
+
+    .hover-tooltip h4 {
+      font-size: 14px;
+    }
+
+    .hover-tooltip p {
+      font-size: 12px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .planet-container {
       animation: none;

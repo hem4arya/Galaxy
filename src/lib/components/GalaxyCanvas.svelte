@@ -26,8 +26,12 @@
     parallaxEngine.destroy();
   });
 
-  // Optimized stars
-  const stars = Array.from({ length: 200 }, (_, i) => ({
+  // Detect mobile for performance optimization
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  
+  // Optimized stars - fewer on mobile
+  const starCount = isMobile ? 100 : 200;
+  const stars = Array.from({ length: starCount }, (_, i) => ({
     x: Math.random() * 100,
     y: Math.random() * 100,
     size: Math.random() * 2 + 0.5,
@@ -36,8 +40,9 @@
     layer: i % 3
   }));
 
-  // Fewer particles for performance
-  const particles = Array.from({ length: 30 }, () => ({
+  // Fewer particles for performance - even less on mobile
+  const particleCount = isMobile ? 10 : 30;
+  const particles = Array.from({ length: particleCount }, () => ({
     x: Math.random() * 100,
     y: Math.random() * 100,
     size: Math.random() * 8 + 3,
@@ -45,8 +50,9 @@
     delay: Math.random() * 10
   }));
 
-  // Nebulae
-  const nebulae = Array.from({ length: 5 }, () => ({
+  // Nebulae - fewer on mobile
+  const nebulaeCount = isMobile ? 2 : 5;
+  const nebulae = Array.from({ length: nebulaeCount }, () => ({
     x: Math.random() * 100,
     y: Math.random() * 100,
     size: Math.random() * 500 + 300,
@@ -303,9 +309,32 @@
 
 
 
+  /* Mobile Performance Optimizations */
+  @media (max-width: 768px) {
+    .layer {
+      will-change: auto;
+    }
+
+    .nebula {
+      filter: blur(40px);
+    }
+
+    .particle {
+      filter: blur(3px);
+    }
+
+    .atmosphere-glow {
+      filter: blur(50px);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     * {
       animation: none !important;
+    }
+    
+    .layer {
+      transform: none !important;
     }
   }
 </style>
