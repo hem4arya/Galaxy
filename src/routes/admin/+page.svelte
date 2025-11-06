@@ -2,23 +2,23 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { authStore } from '$lib/stores/auth';
-  import { dataStore } from '$lib/stores/data';
+  import { projectsData, profileData } from '$lib/data/projects';
   import type { Project } from '$lib/types';
 
   let isAdmin = $state(false);
-  let loading = $state(true);
+  let loading = $state(false);
   let activeTab = $state<'projects' | 'profile'>('projects');
   
-  // Projects
-  let projects = $state<Project[]>([]);
+  // Projects - loaded from static data
+  let projects = $state<Project[]>(projectsData);
   let editingProject = $state<any | null>(null);
   
-  // Profile
-  let aboutText = $state('');
-  let hireText = $state('');
+  // Profile - loaded from static data
+  let aboutText = $state(profileData.about_text);
+  let hireText = $state(profileData.hire_text);
   let collabText = $state('');
-  let hireFormLink = $state('');
-  let profileId = $state<number | null>(null);
+  let hireFormLink = $state(profileData.hire_form_link);
+  let profileId = $state<number | null>(1);
 
   onMount(async () => {
     // Initialize auth and check session
@@ -32,112 +32,25 @@
       }
     });
 
-    if (isAuthenticated) {
-      await loadData();
-    }
-
     return unsubscribe;
   });
 
   async function loadData() {
-    loading = true;
-    try {
-      // Load projects from Supabase
-      await dataStore.projects.load();
-      const unsubscribeProjects = dataStore.projects.subscribe(value => {
-        projects = value;
-      });
-
-      // Load profile from Supabase
-      await dataStore.profile.load();
-      const unsubscribeProfile = dataStore.profile.subscribe(value => {
-        aboutText = value.about_text;
-        hireText = value.hire_text || '';
-        collabText = value.collab_text || '';
-        hireFormLink = value.hire_form_link || 'https://forms.gle/VTqY4WynfDUTDfz68';
-        profileId = value.id;
-      });
-
-      // Clean up subscriptions when component is destroyed
-      return () => {
-        unsubscribeProjects();
-        unsubscribeProfile();
-      };
-    } catch (error) {
-      console.error('Error loading data:', error);
-    } finally {
-      loading = false;
-    }
+    // Data is already loaded from static file
+    loading = false;
   }
 
   async function saveProfile() {
-    if (!profileId) return;
-    
-    try {
-      await dataStore.profile.save({
-        id: profileId,
-        about_text: aboutText,
-        hire_text: hireText,
-        collab_text: collabText,
-        hire_form_link: hireFormLink
-      });
-      
-      alert('Profile saved successfully!');
-    } catch (error) {
-      console.error('Error saving profile:', error);
-      alert('Error saving profile: ' + (error?.message || error));
-    }
+    alert('Editing is disabled. Projects are now loaded from static data.\nTo edit, modify src/lib/data/projects.ts directly.');
   }
 
   async function saveProject(project: any) {
-    try {
-      // Convert skills input string to array
-      const skillsArray = project.skills_input 
-        ? project.skills_input.split(',').map((skill: string) => skill.trim()).filter((skill: string) => skill.length > 0)
-        : [];
-      
-      if (project.id) {
-        // Update existing project
-        await dataStore.projects.update(project.id, {
-          title: project.title,
-          description: project.description,
-          live_link: project.live_link,
-          github_link: project.github_link,
-          x_position: project.x_position,
-          y_position: project.y_position,
-          skills_used: skillsArray
-        });
-      } else {
-        // Insert new project
-        await dataStore.projects.add({
-          title: project.title,
-          description: project.description,
-          live_link: project.live_link,
-          github_link: project.github_link,
-          x_position: project.x_position || 50,
-          y_position: project.y_position || 50,
-          skills_used: skillsArray
-        });
-      }
-      
-      editingProject = null;
-      alert('Project saved successfully!');
-    } catch (error) {
-      console.error('Error saving project:', error);
-      alert('Error saving project: ' + (error?.message || error));
-    }
+    alert('Editing is disabled. Projects are now loaded from static data.\nTo edit, modify src/lib/data/projects.ts directly.');
+    editingProject = null;
   }
 
   async function deleteProject(id: string) {
-    if (!confirm('Are you sure you want to delete this project?')) return;
-    
-    try {
-      await dataStore.projects.delete(id);
-      alert('Project deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting project:', error);
-      alert('Error deleting project: ' + (error?.message || error));
-    }
+    alert('Editing is disabled. Projects are now loaded from static data.\nTo edit, modify src/lib/data/projects.ts directly.');
   }
 
   async function logout() {

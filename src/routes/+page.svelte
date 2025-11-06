@@ -4,160 +4,21 @@
   import Planet from '$lib/components/Planet.svelte';
   import ProjectModal from '$lib/components/ProjectModal.svelte';
   import MoonLogin from '$lib/components/MoonLogin.svelte';
-  import { dataStore } from '$lib/stores/data';
+  import { projectsData, profileData } from '$lib/data/projects';
   import { onMount } from 'svelte';
   import type { Project } from '$lib/types';
 
-
-
-  let projects = $state<Project[]>([]);
-  let aboutText = $state('');
-  let hireText = $state('');
-  let hireFormLink = $state('');
+  // Load data directly from static file - no Supabase needed!
+  let projects = $state<Project[]>(projectsData);
+  let aboutText = $state(profileData.about_text);
+  let hireText = $state(profileData.hire_text);
+  let hireFormLink = $state(profileData.hire_form_link);
   let showAbout = $state(false);
   let showHire = $state(false);
-  let loading = $state(true);
+  let loading = $state(false); // No loading needed for static data
 
-  onMount(async () => {
-    await loadData();
-  });
-
-  async function loadData() {
-    try {
-      // Load projects from Supabase
-      await dataStore.projects.load();
-      const unsubscribeProjects = dataStore.projects.subscribe(value => {
-        if (value.length > 0) {
-          projects = value.map(p => ({
-            id: p.id,
-            title: p.title,
-            description: p.description || '',
-            long_description: p.description || '',
-            tags: p.skills_used || [],
-            importance: p.importance || 3, // Use generated importance
-            x_position: Number(p.x_position) || 50,
-            y_position: Number(p.y_position) || 50,
-            color: p.color || '#8b5cf6', // Use generated color
-            published: true,
-            demo_url: p.live_link || '',
-            github_url: p.github_link,
-            image_url: '', // Not in Supabase schema
-            created_at: p.created_at
-          }));
-        }
-      });
-
-      // Load profile from Supabase
-      await dataStore.profile.load();
-      const unsubscribeProfile = dataStore.profile.subscribe(value => {
-        aboutText = value.about_text || '';
-        hireText = value.hire_text || '';
-        hireFormLink = value.hire_form_link || 'https://forms.gle/VTqY4WynfDUTDfz68';
-      });
-
-      // Clean up subscriptions when component is destroyed
-      return () => {
-        unsubscribeProjects();
-        unsubscribeProfile();
-      };
-    } catch (error) {
-      console.error('Error loading data:', error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  // Fallback projects if database is empty
-  const fallbackProjects: Project[] = [
-    {
-      id: '1',
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution',
-      long_description: 'A comprehensive e-commerce platform built with modern web technologies. Features include user authentication, product management, shopping cart, payment integration with Stripe, real-time inventory tracking, and advanced analytics dashboard.',
-      tags: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Redis'],
-      importance: 5,
-      x_position: 50,
-      y_position: 30,
-      color: '#8b5cf6',
-      published: true,
-      demo_url: 'https://example.com',
-      github_url: 'https://github.com',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '2',
-      title: 'Task Manager Pro',
-      description: 'Collaborative task management app',
-      long_description: 'A real-time collaborative task management application with drag-and-drop functionality, team collaboration features, progress tracking, time estimates, and Kanban boards. Built for teams of all sizes.',
-      tags: ['Vue.js', 'Firebase', 'Tailwind', 'WebSocket'],
-      importance: 4,
-      x_position: 75,
-      y_position: 45,
-      color: '#ec4899',
-      published: true,
-      demo_url: 'https://example.com',
-      github_url: 'https://github.com',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '3',
-      title: 'Weather Dashboard',
-      description: 'Real-time weather tracking',
-      long_description: 'An interactive weather dashboard that provides real-time weather data, 7-day forecasts, beautiful visualizations, weather maps, and severe weather alerts using multiple weather APIs.',
-      tags: ['Svelte', 'TypeScript', 'API', 'D3.js'],
-      importance: 3,
-      x_position: 70,
-      y_position: 70,
-      color: '#06b6d4',
-      published: true,
-      demo_url: 'https://example.com',
-      github_url: 'https://github.com',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '4',
-      title: 'Portfolio Galaxy',
-      description: 'Interactive portfolio website',
-      long_description: 'A stunning portfolio website with smooth 3D animations, parallax effects, responsive design, dark/light mode, and an admin panel for content management. Built with SvelteKit and Supabase.',
-      tags: ['SvelteKit', 'Supabase', 'Three.js'],
-      importance: 5,
-      x_position: 30,
-      y_position: 70,
-      color: '#10b981',
-      published: true,
-      demo_url: 'https://example.com',
-      github_url: 'https://github.com',
-      created_at: new Date().toISOString()
-    },
-    {
-      id: '5',
-      title: 'AI Chat Bot',
-      description: 'Intelligent conversational AI',
-      long_description: 'An advanced AI-powered chatbot with natural language processing, context awareness, multi-language support, and integration with various messaging platforms.',
-      tags: ['Python', 'TensorFlow', 'NLP', 'FastAPI'],
-      importance: 4,
-      x_position: 25,
-      y_position: 45,
-      color: '#f59e0b',
-      published: true,
-      demo_url: 'https://example.com',
-      github_url: 'https://github.com',
-      created_at: new Date().toISOString()
-    }
-  ];
-
-  // Use fallback if no projects loaded
-  $effect(() => {
-    if (!loading && projects.length === 0) {
-      projects = fallbackProjects;
-    }
-  });
-
-  let selectedProject = $state<Project | null>(null);
-  let isMobile = $state(false);
-
+  // Mobile detection
   onMount(() => {
-    // Detect mobile
     const checkMobile = () => {
       isMobile = window.innerWidth <= 768;
     };
@@ -165,6 +26,9 @@
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   });
+
+  let selectedProject = $state<Project | null>(null);
+  let isMobile = $state(false);
 
   // Calculate orbital radius for mobile based on project index and importance
   function getOrbitalRadius(index: number, importance: number): number {
